@@ -1,0 +1,286 @@
+<!-- 
+    DISCLAIMER! PLEASE READ!
+    For tables we have used dataTables (https://datatables.net/)
+    For plots and bar plots we have used Chart.js (https://www.chartjs.org/)
+    Where needed we have used Bootstrap (https://getbootstrap.com/)
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <title>Stake</title>
+  </head>
+  <body id="page-top">
+
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand-sm bg-white mb-3">
+        <div class="container">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/">Home</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/live-leverage">Live-Leverage</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/leverageperepoch">Leverage-Per-Epoch</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/attack51">51% Attack</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/richestlist">Richest-List</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/epochstatistics">Other-Epoch-Statistics</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card shadow">
+                    <div class="card-body mb-3">
+                        Disclaimer! Pool info is taken from the latest snapshot
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Pool Information -->
+   <div class="container mb-3">
+        <div class="row">
+            <div class="col-6 mb-3">
+                
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary">
+                                    {{pool.pool}}
+                                </div>
+                                <div class="text-xs font-weight-bold">
+                                    {{pool.description}}
+                                </div>
+                                <div class="text-xs font-weight-bold text-primary">
+                                    Website
+                                </div>
+                                <div class="text-xs font-weight-bold">
+                                    <a href="{{pool.homepage}}">{{pool.homepage}} </a>
+                                    {{pool.nopage}}
+                                </div>
+                                <div class="text-xs font-weight-bold text-primary">
+                                    Pool ID
+                                </div>
+                                <div class="text-xs font-weight-bold">
+                                    {{pool.pool_view}}
+                                </div>
+                                <div class="text-xs font-weight-bold text-primary">
+                                    Pool Address
+                                </div>
+                                <div class="text-xs font-weight-bold">
+                                    {{pool.pool_hash}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 mb-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary">
+                                    Pool Owners
+                                </div>
+                                {% for owner in poolOwners %}
+                                <div class="text-xs font-weight-bold">
+                                    <a href="/cardanopools/stake/{{owner.hash_raw}}/">{{owner.view}}</a>
+                                </div>
+                                {% endfor %}
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold text-primary">
+                                            Delegators
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold">
+                                            {{delegatorsCount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold text-primary">
+                                            Total stake
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold">
+                                            {{totalStake}} ₳
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold text-primary">
+                                            Total pledge
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-xs font-weight-bold">
+                                            {{totalPledge}} ₳
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Leverage Per Epoch -->
+    <div class="container mb-3">
+        <div class="card text-center shadow">
+            <div class="card-header text-primary font-weight-bold">
+                Leverage Per Epoch
+            </div>
+            <div class="card-body mb-3">
+                <canvas id="barChart" ></canvas>
+                <script>
+                    var ctx = document.getElementById("barChart");
+                    var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: "{{labels}}".split(','),
+                        datasets: [{
+                        label: "Leverage",
+                        backgroundColor: "#b6c5f2",
+                        data: "{{data}}".split(','),
+                        }],
+                    },
+                    options: {
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 3,
+                            callback: function(value, index, values) {
+                                return value;
+                            }
+                            },
+                        }],
+                        xAxes: [{
+                            barPercentage: 0.9,
+                            categoryPercentage: 0.55,
+                        }],
+                        },
+                        tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var label = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return label + ': ' + tooltipItem.yLabel;
+                            }
+                        }
+                        },
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delegators List -->
+    <div class="container mb-3">
+        <div class="card text-center shadow">
+            <div class="card-header text-primary font-weight-bold">
+                Delegators
+            </div>
+            <div class="card-body mb-3">
+                <table id="example" class="table table-striped table-bordered mb-3" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Delegator</th>
+                            <th>Stake (₳)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for delegator in delegators %}
+                        <tr>
+                            <td> 
+                                <div class="text-small">
+                                    <a href="/cardanopools/stake/{{delegator.hash_raw}}/">{{delegator.view}} </a>
+                                </div>
+                            </td>
+                            <td> 
+                                <div class="text-small">
+                                    {{delegator.stake}} ₳
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Delegator</th>
+                            <th>Stake (₳)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer sticky-footer bg-light">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Cardanopools 2021</span>
+            </div>
+            <div class="copyright text-center my-auto">
+                <span>Price info provided by <a href="https://www.coingecko.com/">CoinGecko</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"> </script>
+    <script>
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+    </script>
+
+  </body>
+</html>
+

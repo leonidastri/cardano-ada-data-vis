@@ -1,0 +1,132 @@
+{% load static %}
+
+<!-- 
+    DISCLAIMER! PLEASE READ!
+    For tables we have used dataTables (https://datatables.net/)
+    For plots and bar plots we have used Chart.js (https://www.chartjs.org/)
+    Where needed we have used Bootstrap (https://getbootstrap.com/)
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link href="{% static 'cardanopools/css/style.css' %}" rel="stylesheet">
+
+    <title>Live Leverage</title>
+  </head>
+  <body id="page-top">
+
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand-sm bg-white mb-3">
+        <div class="container">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/">Home</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/live-leverage">Live-Leverage</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/leverageperepoch">Leverage-Per-Epoch</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/attack51">51% Attack</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/richestlist">Richest-List</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/epochstatistics">Other-Epoch-Statistics</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Live Leverage Table -->
+    <div class="container mb-3">
+        <div class="card text-center shadow">
+            <div class="card-header text-primary font-weight-bold">
+                Live Leverage
+            </div>
+            <div class="card-body mb-3">
+                <table id="example" class="table table-striped table-bordered mb-3" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Pool</th>
+                            <th>Pool View </th>
+                            <th>Leverage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pool in poolsLiveLeverage %}
+                        <tr>
+                            <td> 
+                                <div class="text-small">
+                                    {{pool.pool}}
+                                </div>
+                            </td>
+                            <td> 
+                                <div class="text-small">
+                                    {{pool.pool_view}}
+                                </div>
+                            </td>
+                            <td> 
+                                <div class="text-small">
+                                    {{pool.leverage}}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Pool</th>
+                            <th>Pool View </th>
+                            <th>Leverage</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer sticky-footer bg-light">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Cardanopools 2021</span>
+            </div>
+            <div class="copyright text-center my-auto">
+                <span>Price info provided by <a href="https://www.coingecko.com/">CoinGecko</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"> </script>
+    <script>
+      $(document).ready(function() {
+          $('#example').DataTable();
+      } );
+    </script>
+
+  </body>
+</html>

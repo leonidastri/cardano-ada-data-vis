@@ -1,0 +1,230 @@
+<!-- 
+    DISCLAIMER! PLEASE READ!
+    For tables we have used dataTables (https://datatables.net/)
+    For plots and bar plots we have used Chart.js (https://www.chartjs.org/)
+    Where needed we have used Bootstrap (https://getbootstrap.com/)
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <title>Attack 51</title>
+  </head>
+  <body id="page-top">
+
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand-sm bg-white">
+        <div class="container">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/">Home</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/live-leverage">Live-Leverage</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/leverageperepoch">Leverage-Per-Epoch</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/attack51">51% Attack</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/richestlist">Richest-List</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1 mr-3">
+                        <a class="nav-link" href="/cardanopools/epochstatistics">Other-Epoch-Statistics</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mb-3">
+        <div class="card text-center">
+            <div class="card-header font-weight-bold text-primary">
+                Lowest Number of Pools Owning In Total More Than 50% of Total Stake
+            </div>
+            <div class="card-body mb-3">
+                <canvas id="barChart1" ></canvas>
+                <script>
+                    var ctx = document.getElementById("barChart1");
+                    var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: "{{labels1}}".split(','),
+                        datasets: [{
+                        label: "Pools Count",
+                        backgroundColor: "#b6c5f2",
+                        data: "{{data1}}".split(','),
+                        }],
+                    },
+                    options: {
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 3,
+                            callback: function(value, index, values) {
+                                return value;
+                            }
+                            },
+                        }],
+                        xAxes: [{
+                            barPercentage: 0.9,
+                            categoryPercentage: 0.55,
+                        }],
+                        },
+                        tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ': ' + tooltipItem.yLabel;
+                            }
+                        }
+                        },
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-3">
+        <div class="card text-center">
+            <div class="card-header font-weight-bold text-primary">
+                Lowest Number of Stake Addresses Owning In Total More Than 50% of Total Stake
+            </div>
+            <div class="card-body mb-3">
+                <canvas id="barChart2" ></canvas>
+                <script>
+                    var ctx = document.getElementById("barChart2");
+                    var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: "{{labels2}}".split(','),
+                        datasets: [{
+                        label: "Stake Addresses Count",
+                        backgroundColor: "#b6c5f2",
+                        data: "{{data2}}".split(','),
+                        }],
+                    },
+                    options: {
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 3,
+                            callback: function(value, index, values) {
+                                return value;
+                            }
+                            },
+                        }],
+                        xAxes: [{
+                            barPercentage: 0.9,
+                            categoryPercentage: 0.55,
+                        }],
+                        },
+                        tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ': ' + tooltipItem.yLabel;
+                            }
+                        }
+                        },
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-3">
+        <div class="card text-center">
+            <div class="card-header font-weight-bold text-primary">
+                Lowest Number of Addresses Owning In Total More Than 50% of Total Stake
+            </div>
+            <div class="card-body mb-3">
+                <canvas id="barChart3" ></canvas>
+                <script>
+                    var ctx = document.getElementById("barChart3");
+                    var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: "{{labels3}}".split(','),
+                        datasets: [{
+                        label: "Addresses Count",
+                        backgroundColor: "#b6c5f2",
+                        data: "{{data3}}".split(','),
+                        }],
+                    },
+                    options: {
+                        scales: {
+                        yAxes: [{
+                            ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 3,
+                            callback: function(value, index, values) {
+                                return value;
+                            }
+                            },
+                        }],
+                        xAxes: [{
+                            barPercentage: 0.9,
+                            categoryPercentage: 0.55,
+                        }],
+                        },
+                        tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ': ' + tooltipItem.yLabel;
+                            }
+                        }
+                        },
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    
+     <!-- Footer -->
+     <footer class="footer sticky-footer bg-light">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Cardanopools 2021</span>
+            </div>
+            <div class="copyright text-center my-auto">
+                <span>Price info provided by <a href="https://www.coingecko.com/">CoinGecko</a></span>
+            </div>
+        </div>
+    </footer>
+
+  </body>
+</html>
